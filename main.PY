@@ -46,7 +46,7 @@ def cloud(i ,x, y=100):
 def object_movement(i ,x, y ,):
     win.blit(i, (x,y)) 
     
-def gameover():
+def gameover(score):
     while True:
         win.fill((0, 0, 0))
         win.blit(game_over_img , (150 , 75 ))
@@ -137,7 +137,7 @@ def gameloop():
 
         if bird_y >= 450: 
             die_sound.play()
-            r = gameover()
+            r = gameover(score)
             if not r: 
                 break
             else:
@@ -209,7 +209,7 @@ def gameloop():
             pipe_rect = all_pipes[i].get_rect(topleft=(all_objects[i][0], all_objects[i][1]))
             if collision(bird_rect.left, bird_rect.top, pipe_rect.left, pipe_rect.top, bird_mask, pipe_mask):
                 hit_sound.play()
-                y = gameover()
+                y = gameover(score)
 
                 RUN = y
 
