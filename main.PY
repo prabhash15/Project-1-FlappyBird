@@ -29,7 +29,7 @@ scorey = 10
 PP = False
 font = pygame.font.Font('freesansbold.ttf', 32)
  
-#Functions of the game 
+#mask creation for collision detection
 bird_mask = pygame.mask.from_surface(bird)
 pipe_mask = pygame.mask.from_surface(pipe)
 
