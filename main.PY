@@ -2,6 +2,7 @@ import pygame
 import math
 import sys
 import random
+import csv
 
 pygame.init()
 flap_sound = pygame.mixer.Sound('sounds/flap.mp3')
@@ -28,6 +29,7 @@ scorex = 10
 scorey = 10
 PP = False
 font = pygame.font.Font('freesansbold.ttf', 32)
+
  
 #mask creation for collision detection
 bird_mask = pygame.mask.from_surface(bird)
@@ -47,13 +49,17 @@ def object_movement(i ,x, y ,):
     win.blit(i, (x,y)) 
     
 def gameover(score):
+    if score > high():
+        write_high(score)
     while True:
         win.fill((0, 0, 0))
         win.blit(game_over_img , (150 , 75 ))
         final_score_text = font.render(f"Score: {score}", True, (255, 255, 255))
+        high_score_text  = font.render(f"High score: {high()}" , True , (255 , 255 , 255))
         restart = font.render("'R' to Restart" , True , (255 , 0 , 0))
         win.blit(final_score_text, (270, 250))
         win.blit(restart , (225 , 350))
+        win.blit(high_score_text , (0 , 25))
         pygame.display.flip()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -62,13 +68,28 @@ def gameover(score):
                 if event.key == pygame.K_r:
                     return True
                  
-def score1(score ,x,y): 
+def score1(score ,x,y):     
     text = font.render('Score: ' + str(score), True, (0,0,0))
     win.blit(text,(x, y))
+    
+def high():
+    with open("high_score.csv" , "r") as f:
+        wr = csv.reader(f)
+        for r in wr:
+            max_score = r[0]
+    return int(max_score)
+
+def write_high(score):
+    with open("high_score.csv" , "w" , newline = "") as fp:
+        ww = csv.writer(fp)
+        ww.writerow([score])
+    
+        
+        
 
 # GAME LOOP 
 def gameloop():
-
+    max_score = high()
     # Movement of bird
     bird_x  = 300 
     bird_y =  200
@@ -108,6 +129,10 @@ def gameloop():
     
     state = False
     RUN = True
+    
+    
+    
+    #running everything inside of a loop
     while RUN:
         state = False
         win.fill((0,0,0 ))
@@ -115,6 +140,8 @@ def gameloop():
         
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+                if score > high():
+                    write_high(score)
                 RUN = False
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE: 
@@ -137,7 +164,7 @@ def gameloop():
 
         if bird_y >= 450: 
             die_sound.play()
-            r = gameover(score)
+            gameover(score)
             if not r: 
                 break
             else:
@@ -215,6 +242,7 @@ def gameloop():
 
                 if not RUN:
                     break
+                
                 else:
                     # Movement of bird
                     bird_x  = 300 
@@ -267,4 +295,11 @@ def gameloop():
 
 
 gameloop()
- 
+pygame.quit()
+sys.exit()
+
+
+    
+    
+
+
