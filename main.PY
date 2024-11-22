@@ -13,6 +13,7 @@ die_sound = pygame.mixer.Sound('sounds/die.mp3')
 
 #Getting images , sound , background , objects 
 
+pygame.display.set_caption('FlappyBirdClone')
 win = pygame.display.set_mode((680,480))
 bird = pygame.image.load("images/bird.png").convert_alpha()
 background = pygame.image.load("images/cc.png").convert_alpha()
