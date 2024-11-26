@@ -19,10 +19,9 @@ bird = pygame.image.load("images/bird.png").convert_alpha()
 background = pygame.image.load("images/cc.png").convert_alpha()
 clock = pygame.time.Clock()
 clouds = pygame.image.load("images/object1.png").convert_alpha()
-pipe = pygame.image.load("images/longpipe2.png").convert_alpha()
-pipe2 = pygame.image.load("images/longpipeopp.png").convert_alpha()
+pipe = pygame.image.load("images/pipe1.png").convert_alpha()
+pipe2 = pygame.image.load("images/pipe2.png").convert_alpha()
 game_over_img = pygame.image.load("images/game-over.png").convert_alpha()
-
 
 
 all_pipes = [pipe , pipe2]
